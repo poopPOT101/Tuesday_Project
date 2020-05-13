@@ -56,11 +56,9 @@ class App:
         self.PIL_image = PIL.Image.open(self.Icon_Path)
         self.PIL_image.thumbnail(self.size)
         self.Icon = PIL.ImageTk.PhotoImage(self.PIL_image)
-        self.Executable = True if self.Exe is not None else False
-        ### Initializing The Command ###
-#        if self.Executable:
-#            self.command = self.command1()
 
+        ### Initializing The Command ###
+        self.Executable = True if self.Exe is not None else False
         ### Initializing The Button ###
         self.Button = tk.Button(root,
                                image=self.Icon,
@@ -88,13 +86,13 @@ class App:
 #    def command1(self):
  #        os.system("start calc")
 
-
+Strunes = App('Gui\\Images\\Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
+Clock = App('Gui\\Images\\Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
+Desktop = App('Gui\\Images\\Desktop_Icon.png' , description = 'to get to the desktop', name='Desktop' )
 Tuesday = App('Gui\\Images\\AI.png', description='For all your robot needs', name='Tuesday')
 Weather = App('Gui\\Images\\Weather_Icon.png', description='An App for Weather... lol', name='Weather')
 Settings = App('Gui\\Images\\Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
-Strunes = App('Gui\\Images\\Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
-Clock = App('Gui\\Images\\Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
-Desktop = App('Gui\\Images\\Desktop_Icon.png', name='Desktop', description='To get to the hacky hacky shit, dog', exe=None)
+
 '''
 Clock.Create_App()
 Tuesday.Create_App()
