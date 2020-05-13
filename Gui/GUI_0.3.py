@@ -6,7 +6,7 @@ Best Version of Gui So Far
 import PIL
 import tkinter as tk
 from PIL import Image, ImageTk
-
+import os
 
 ### Tkinter Root Window ###
 root = tk.Tk()
@@ -42,27 +42,38 @@ class App:
 #                     'bottom_lef':None, 'bottom_middle':None, 'bottom_right':None
 #                    }
 
-    def __init__(self, icon=None, description=None, width=120, height=120, name=None):
+    def __init__(self, icon=None, description=None, width=120, height=120, name=None, exe=None):
+        self.Exe = exe
         self.Icon_Path = icon
         self.Description = description
         self.Width = width
         self.Height = height
         self.size = (width, height)
         self.Name = name
+        App.App_List.append(self.Name)
+
         ### Initializing Icon For Each Object ###
         self.PIL_image = PIL.Image.open(self.Icon_Path)
         self.PIL_image.thumbnail(self.size)
         self.Icon = PIL.ImageTk.PhotoImage(self.PIL_image)
-        App.App_List.append(self.Name)
+        self.Executable = True if self.Exe is not None else False
+        ### Initializing The Command ###
+#        if self.Executable:
+#            self.command = self.command1()
+
+        ### Initializing The Button ###
         self.Button = tk.Button(root,
                                image=self.Icon,
                                borderwidth=0,
                                height=Button_Size['h'],
                                width=Button_Size['w'],
-                               activebackground=Active_Background_Color, bg=Background1_Color)
+                               activebackground=Active_Background_Color,
+                               bg=Background1_Color,
+                               command=lambda: os.system(f"start {self.Exe}") if self.Executable else None
+                               )
         for index in range(len(App.App_List)):
             if index == 0:
-                 self.Button.place(relx=.1, rely=.2)
+                self.Button.place(relx=.1, rely=.2)
             elif index == 1:
                 self.Button.place(relx=.4, rely=.2)
             elif index == 2:
@@ -71,16 +82,19 @@ class App:
                 self.Button.place(relx=.1, rely=.6)
             elif index == 4:
                 self.Button.place(relx=.4, rely=.6)
-            else:
+            elif index == 5:
                 self.Button.place(relx=.7, rely=.6)
 
+#    def command1(self):
+ #        os.system("start calc")
 
 
 Tuesday = App('Gui\\Images\\AI.png', description='For all your robot needs', name='Tuesday')
 Weather = App('Gui\\Images\\Weather_Icon.png', description='An App for Weather... lol', name='Weather')
 Settings = App('Gui\\Images\\Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
-Strunes = App('Gui\\Images\\Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes')
+Strunes = App('Gui\\Images\\Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
 Clock = App('Gui\\Images\\Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
+Desktop = App('Gui\\Images\\Desktop_Icon.png', name='Desktop', description='To get to the hacky hacky shit, dog', exe=None)
 '''
 Clock.Create_App()
 Tuesday.Create_App()
