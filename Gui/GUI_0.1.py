@@ -35,8 +35,8 @@ PIL_image = PIL.Image.open('Gui\\Images\\Settings.png')
 PIL_image.thumbnail(SETTINGS_BUTTON_SIZE)
 image = PIL.ImageTk.PhotoImage(PIL_image)
 
-open_app_1 = tk.Button\
-    (root,
+
+open_app_1 = tk.Button(root,
                        image=image,
                        borderwidth=0,
                        height=SETTINGS_BUTTON_SIZE[0],
