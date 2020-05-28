@@ -7,6 +7,7 @@ import PIL
 import tkinter as tk
 from PIL import Image, ImageTk
 import os
+from pathlib import Path
 
 ### Tkinter Root Window ###
 root = tk.Tk()
@@ -42,9 +43,9 @@ class App:
 #                     'bottom_lef':None, 'bottom_middle':None, 'bottom_right':None
 #                    }
 
-    def __init__(self, icon=None, description=None, width=120, height=120, name=None, exe=None):
+    def __init__(self, icon_path=None, description=None, width=120, height=120, name=None, exe=None):
         self.Exe = exe
-        self.Icon_Path = icon
+        self.Icon_Path = Path(icon_path)
         self.Description = description
         self.Width = width
         self.Height = height
@@ -82,16 +83,18 @@ class App:
                 self.Button.place(relx=.4, rely=.6)
             elif index == 5:
                 self.Button.place(relx=.7, rely=.6)
-
+            else:
+                break
+                pass
 #    def command1(self):
  #        os.system("start calc")
 
-Strunes = App('Gui\\Images\\Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
-Clock = App('Gui\\Images\\Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
-Desktop = App('Gui\\Images\\Desktop_Icon.png' , description = 'to get to the desktop', name='Desktop' )
-Tuesday = App('Gui\\Images\\AI.png', description='For all your robot needs', name='Tuesday')
-Weather = App('Gui\\Images\\Weather_Icon.png', description='An App for Weather... lol', name='Weather')
-Settings = App('Gui\\Images\\Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
+Settings = App(icon_path='Gui/Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
+Strunes = App(icon_path='Gui/Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
+Clock = App(icon_path='Gui/Images/Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
+Desktop = App(icon_path='Gui/Images/Desktop_Icon.png' , description = 'to get to the desktop', name='Desktop' )
+Tuesday = App(icon_path='Gui/Images/AI.png', description='For all your robot needs', name='Tuesday')
+Weather = App(icon_path='Gui/Images/Weather_Icon.png', description='An App for Weather... lol', name='Weather')
 
 '''
 Clock.Create_App()
@@ -103,3 +106,5 @@ Strunes.Create_App()
 
 
 root.mainloop()
+
+
