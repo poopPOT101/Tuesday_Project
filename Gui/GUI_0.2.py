@@ -1,107 +1,95 @@
-import tkinter as tk
+"""
+Best Version of Gui So Far
+"""
+
+### Imports ###
 import PIL
-
-import os
-
-
+import tkinter as tk
+from PIL import Image, ImageTk
 
 
-#All Perams#
-BG_COLOR = '#00E5B4'
-ACTIVE_BG_COLOR = '#bdffed'
-DISPLAY_BAR_COLOR = '#00b584'
-ICON_SIZE = 128, 128
-HEIGHT = 480
-WIDTH = 720
-App_Images = ('', 'Images\Settings.png',
-                  'Images\Settings.png',
-                  'Images\Settings.png',
-                  'Images\Settings.png',
-                  'Images\Settings.png',
-                  'Images\Settings.png')
-
-#root = tk.Toplevel()
+### Tkinter Root Window ###
 root = tk.Tk()
 
-def Set_Icon(Image=''):
-    PIL_image=PIL.Image.open(Image)
-    PIL_image.thumbnail(ICON_SIZE)
-    app_icon = PIL.ImageTk.PhotoImage(PIL_image)          
-    return app_icon
-    
-#Canvas#
-main_canvas = tk.Canvas(root, height=HEIGHT,
-                              width=WIDTH, 
-                              bg=BG_COLOR)
+### Canvases ###
+Canvas1_Height = 480
+Canvas1_Width = 720
+Background1_Color = '#00E5B4'
+Active_Background_Color = '#bdffed'
+Button_Size = {'w': 125, 'h': 125}
+#Button_Size = 125, 125
+main_canvas = tk.Canvas(root,
+                        height=Canvas1_Height, #Canvas Height#
+                        width=Canvas1_Width, #Canvas Width#
+                        bg=Background1_Color) #Canvas Background Color#
 main_canvas.pack()
 
-#Frame#
+### Frame ###
+Display_Bar_Color = '#00b584'
+Display_Bar = tk.Frame(main_canvas,
+                       bg=Display_Bar_Color
+                       )
+Display_Bar.place(relwidth=1,
+                  relheight=.1,
+                  relx=0,
+                  rely=0
+                  )
+### App Class And App List ###
+class App:
+    App_List = []
+#    App_Positions = {
+#                     'top_left':None, 'top_middle':None   , 'top_right':None,
+#                     'bottom_lef':None, 'bottom_middle':None, 'bottom_right':None
+#                    }
 
-display_bar= tk.Frame(main_canvas, bg=DISPLAY_BAR_COLOR)
-display_bar.place(relwidth=1, relheight=0.1, relx=0., rely=0)
+    def __init__(self, icon=None, description=None, width=120, height=120, name=None):
+        self.Icon_Path = icon
+        self.Description = description
+        self.Width = width
+        self.Height = height
+        self.size = (width, height)
+        self.Name = name
+        ### Initializing Icon For Each Object ###
+        self.PIL_image = PIL.Image.open(self.Icon_Path)
+        self.PIL_image.thumbnail(self.size)
+        self.Icon = PIL.ImageTk.PhotoImage(self.PIL_image)
+        App.App_List.append(self.Name)
+
+    def Create_App(self):
+        self.Button = tk.Button(root,
+                               image=self.Icon,
+                               borderwidth=0,
+                               height=Button_Size['h'],
+                               width=Button_Size['w'],
+                               activebackground=Active_Background_Color, bg=Background1_Color)
+        for index in range(len(App.App_List)):
+            if index == 0:
+                return self.Button.place(relx=.1, rely=.2)
+            elif index == 1:
+                return self.Button.place(relx=.4, rely=.2)
+            elif index == 2:
+                return self.Button.place(relx=.7, rely=.2)
+            elif index == 3:
+                return self.Button.place(relx=.1, rely=.6)
+            elif index == 4:
+                return self.Button.place(relx=.4, rely=.6)
+            else:
+                return self.Button.place(relx=.7, rely=.6)
 
 
 
+Tuesday = App('Gui\\Images\\AI.png', description='For all your robot needs', name='Tuesday')
+Weather = App('Gui\\Images\\Weather_Icon.png', description='An App for Weather... lol', name='Weather')
+Settings = App('Gui\\Images\\Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
+Strunes = App('Gui\\Images\\Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes')
+Clock = App('Gui\\Images\\Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
 
-"""
-APPS
-"""
-Apps=['Settings', 'Weather', 'Tuesday', 'Clock', 'Music', 'PC Mode']
+Clock.Create_App()
+Tuesday.Create_App()
+Weather.Create_App()
+Settings.Create_App()
+Strunes.Create_App()
 
-#Application One (Settings)#
-open_app_1 = tk.Button(root,
-                       image = Set_Icon(Image=App_Images[1]),
-                       borderwidth=0, 
-                       height=ICON_SIZE[0],
-                       width=ICON_SIZE[1],
-                       activebackground=ACTIVE_BG_COLOR, bg=BG_COLOR)
-open_app_1.place(relx=.1, rely=.2)
 
-"""
 
-#Application Two (Weather)#
-open_app_2 = tk.Button(root,
-                       image=SetIcon(App_Images[2]),
-                       borderwidth=0, 
-                       height=ICON_SIZE[0],
-                       width=ICON_SIZE[1],
-                       activebackground=ACTIVE_BG_COLOR, bg=BG_COLOR)
-open_app_2.place(relx=.4, rely=.2)
-
-#Application Three (Tuesday)#
-open_app_3 = tk.Button(root,
-                       image=SetIcon(App_Images[3]),
-                       borderwidth=0, 
-                       height=ICON_SIZE[0],
-                       width=ICON_SIZE[1],
-                       activebackground=ACTIVE_BG_COLOR, bg=BG_COLOR)
-open_app_3.place(relx=.7, rely=.2)
-
-#Application Four (Clock)#
-open_app_4 = tk.Button(root,
-                       image=SetIcon(App_Images[4]),
-                       borderwidth=0, 
-                       height=ICON_SIZE[0],
-                       width=ICON_SIZE[1],
-                       activebackground=ACTIVE_BG_COLOR, bg=BG_COLOR)
-open_app_4.place(relx=.1, rely=.6)
-
-#Application Five (Music)#
-open_app_5 = tk.Button(root,
-                       image=SetIcon(App_Images[5]),
-                       borderwidth=0, 
-                       height=ICON_SIZE[0],
-                       width=ICON_SIZE[1],
-                       activebackground=ACTIVE_BG_COLOR, bg=BG_COLOR)
-open_app_5.place(relx=.4, rely=.6)
-
-#Application Six (DesktopMode)#
-open_app_6 = tk.Button(root,
-                       image=SetIcon(App_Images[6]),
-                       borderwidth=0, 
-                       height=ICON_SIZE[0],
-                       width=ICON_SIZE[1],
-                       activebackground=ACTIVE_BG_COLOR, bg=BG_COLOR)
-open_app_6.place(relx=.7, rely=.6)
-"""
 root.mainloop()
