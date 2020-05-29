@@ -10,33 +10,43 @@ import os
 from pathlib import Path
 import weakref
 
+'''
+-------
+Widgets
+-------
+'''
 ### Tkinter Root Window ###
+window_h=480
+window_w=720
 root = tk.Tk()
+root.geometry("720x480")
 #root = tk.toplevel()
 
+### Frame ###
+displaybar_h = window_h*.1
+displaybar_w = window_w*1
+Display_Bar_Color = '#00b584'
+Display_Bar = tk.Frame(root,
+                       bg=Display_Bar_Color,
+                       height= displaybar_h
+                       )
+Display_Bar.pack(fill='x',side='top')
 ### Canvases ###
-Canvas1_Height = 480
-Canvas1_Width = 720
+Canvas1_Height = window_h*1-displaybar_h
+Canvas1_Width = window_w*1-displaybar_w
 Background1_Color = '#00E5B4'
 Active_Background_Color = '#bdffed'
 Button_Size = {'w': 125, 'h': 125}
 #Button_Size = 125, 125
-main_canvas = tk.Canvas(root,
-                        height=Canvas1_Height, #Canvas Height#
-                        width=Canvas1_Width, #Canvas Width#
+main_canvas = tk.Canvas(root,#Canvas Height = fill# #Canvas Width = fill#
                         bg=Background1_Color) #Canvas Background Color#
-main_canvas.pack()
+main_canvas.pack(fill='both', expand = True)
 
-### Frame ###
-Display_Bar_Color = '#00b584'
-Display_Bar = tk.Frame(main_canvas,
-                       bg=Display_Bar_Color
-                       )
-Display_Bar.place(relwidth=1,
-                  relheight=.1,
-                  relx=0,
-                  rely=0
-                  )
+'''
+-----------------
+Classes and Stuff
+------------------
+'''
 ### App Class And App List ###
 class App:
     App_Positions = {
@@ -44,6 +54,7 @@ class App:
                      'bottom_lef':(.1, .6), 'bottom_middle':(.4,.6), 'bottom_right':(.7, .6)
                     }
     App_List = {}
+    Object_List = []
     def __init__(self, icon_path=None, description=None, width=125, height=125, name=None, exe=None):
         self.Exe = exe
         self.Icon_Path = Path(icon_path)
@@ -54,6 +65,7 @@ class App:
         self.Name = name
         self.icon_path = icon_path
         App.App_List.update({repr(self): self.Name})
+        App.Object_List.append(self)
 
         ### Initializing Icon For Each Object ###
         self.PIL_image = PIL.Image.open(self.Icon_Path)
@@ -72,26 +84,30 @@ class App:
                                bg=Background1_Color,
                                command=lambda: os.system(f"start {self.Exe}") if self.Executable else None
                                )
+    def __repr__(self):
+        return f'{self.Name} = App(icon_path={self.icon_path}, description={self.Description}, name={self.Name}, exe={self.Exe}'
 
-        for index in range(len(App.App_List)):
+    def __str__(self):
+        return f'The Application Name is: {self.Name} \nThe Description is: {self.Description}'
+    @staticmethod
+    def Create_App():
+        for index, object in enumerate(App.Object_List):
             if index == 0:
-                self.Button.place(relx=App.App_Positions['top_left'][0], rely=App.App_Positions['top_left'][1])
+                object.Button.place(relx=App.App_Positions['top_left'][0], rely=App.App_Positions['top_left'][1])
             elif index == 1:
-                self.Button.place(relx=App.App_Positions['top_middle'][0], rely=App.App_Positions['top_middle'][1])
+                object.Button.place(relx=App.App_Positions['top_middle'][0], rely=App.App_Positions['top_middle'][1])
             elif index == 2:
-                self.Button.place(relx=App.App_Positions['top_right'][0], rely=App.App_Positions['top_right'][1])
+                object.Button.place(relx=App.App_Positions['top_right'][0], rely=App.App_Positions['top_right'][1])
             elif index == 3:
-                self.Button.place(relx=App.App_Positions['bottom_lef'][0], rely=App.App_Positions['bottom_lef'][1])
+                object.Button.place(relx=App.App_Positions['bottom_lef'][0], rely=App.App_Positions['bottom_lef'][1])
             elif index == 4:
-                self.Button.place(relx=App.App_Positions['bottom_middle'][0], rely=App.App_Positions['bottom_middle'][1])
+                object.Button.place(relx=App.App_Positions['bottom_middle'][0], rely=App.App_Positions['bottom_middle'][1])
             elif index == 5:
-                self.Button.place(relx=App.App_Positions['bottom_right'][0], rely=App.App_Positions['bottom_right'][1])
+                object.Button.place(relx=App.App_Positions['bottom_right'][0], rely=App.App_Positions['bottom_right'][1])
             else:
                 break
                 pass
 
-    def __repr__(self):
-        return f'{self.Name} = App(icon_path={self.icon_path}, description={self.Description}, name={self.Name}, exe={self.Exe}'
 
 
 Settings = App(icon_path='Gui/Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
@@ -101,13 +117,9 @@ Desktop = App(icon_path='Gui/Images/Desktop_Icon.png' , description = 'to get to
 Tuesday = App(icon_path='Gui/Images/AI.png', description='For all your robot needs', name='Tuesday')
 Weather = App(icon_path='Gui/Images/Weather_Icon.png', description='An App for Weather... lol', name='Weather')
 
-'''
-Clock.Create_App()
-Tuesday.Create_App()
-Weather.Create_App()
-Settings.Create_App()
-Strunes.Create_App()
-'''
 
+def execute_file():
+    App.Create_App()
+    root.mainloop()
 
-root.mainloop()
+execute_file()
