@@ -8,9 +8,11 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import os
 from pathlib import Path
+import weakref
 
 ### Tkinter Root Window ###
 root = tk.Tk()
+#root = tk.toplevel()
 
 ### Canvases ###
 Canvas1_Height = 480
@@ -37,13 +39,12 @@ Display_Bar.place(relwidth=1,
                   )
 ### App Class And App List ###
 class App:
-    App_List = []
-#    App_Positions = {
-#                     'top_left':None, 'top_middle':None   , 'top_right':None,
-#                     'bottom_lef':None, 'bottom_middle':None, 'bottom_right':None
-#                    }
-
-    def __init__(self, icon_path=None, description=None, width=120, height=120, name=None, exe=None):
+    App_Positions = {
+                     'top_left': (.1,.2), 'top_middle': (.4, .2)   , 'top_right':(.7, .2),
+                     'bottom_lef':(.1, .6), 'bottom_middle':(.4,.6), 'bottom_right':(.7, .6)
+                    }
+    App_List = {}
+    def __init__(self, icon_path=None, description=None, width=125, height=125, name=None, exe=None):
         self.Exe = exe
         self.Icon_Path = Path(icon_path)
         self.Description = description
@@ -51,7 +52,8 @@ class App:
         self.Height = height
         self.size = (width, height)
         self.Name = name
-        App.App_List.append(self.Name)
+        self.icon_path = icon_path
+        App.App_List.update({repr(self): self.Name})
 
         ### Initializing Icon For Each Object ###
         self.PIL_image = PIL.Image.open(self.Icon_Path)
@@ -70,24 +72,27 @@ class App:
                                bg=Background1_Color,
                                command=lambda: os.system(f"start {self.Exe}") if self.Executable else None
                                )
+
         for index in range(len(App.App_List)):
             if index == 0:
-                self.Button.place(relx=.1, rely=.2)
+                self.Button.place(relx=App.App_Positions['top_left'][0], rely=App.App_Positions['top_left'][1])
             elif index == 1:
-                self.Button.place(relx=.4, rely=.2)
+                self.Button.place(relx=App.App_Positions['top_middle'][0], rely=App.App_Positions['top_middle'][1])
             elif index == 2:
-                self.Button.place(relx=.7, rely=.2)
+                self.Button.place(relx=App.App_Positions['top_right'][0], rely=App.App_Positions['top_right'][1])
             elif index == 3:
-                self.Button.place(relx=.1, rely=.6)
+                self.Button.place(relx=App.App_Positions['bottom_lef'][0], rely=App.App_Positions['bottom_lef'][1])
             elif index == 4:
-                self.Button.place(relx=.4, rely=.6)
+                self.Button.place(relx=App.App_Positions['bottom_middle'][0], rely=App.App_Positions['bottom_middle'][1])
             elif index == 5:
-                self.Button.place(relx=.7, rely=.6)
+                self.Button.place(relx=App.App_Positions['bottom_right'][0], rely=App.App_Positions['bottom_right'][1])
             else:
                 break
                 pass
-#    def command1(self):
- #        os.system("start calc")
+
+    def __repr__(self):
+        return f'{self.Name} = App(icon_path={self.icon_path}, description={self.Description}, name={self.Name}, exe={self.Exe}'
+
 
 Settings = App(icon_path='Gui/Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
 Strunes = App(icon_path='Gui/Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
@@ -106,5 +111,3 @@ Strunes.Create_App()
 
 
 root.mainloop()
-
-
