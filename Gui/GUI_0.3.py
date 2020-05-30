@@ -2,6 +2,8 @@
 Best Version of Gui So Far
 """
 
+# | I'm a Vandal | #
+
 ### Imports ###
 import PIL
 import tkinter as tk
@@ -48,6 +50,8 @@ Classes and Stuff
 ------------------
 '''
 ### App Class And App List ###
+
+
 class App:
     App_Positions = {
                      'top_left': (.1,.2), 'top_middle': (.4, .2)   , 'top_right':(.7, .2),
@@ -76,19 +80,21 @@ class App:
         self.Executable = True if self.Exe is not None else False
         ### Initializing The Button ###
         self.Button = tk.Button(root,
-                               image=self.Icon,
-                               borderwidth=0,
-                               height=Button_Size['h'],
-                               width=Button_Size['w'],
-                               activebackground=Active_Background_Color,
-                               bg=Background1_Color,
-                               command=lambda: os.system(f"start {self.Exe}") if self.Executable else None
-                               )
+                                image=self.Icon,
+                                borderwidth=0,
+                                height=Button_Size['h'],
+                                width=Button_Size['w'],
+                                activebackground=Active_Background_Color,
+                                bg=Background1_Color,
+                                command=lambda: os.system(f"start {self.Exe}") if self.Executable else None
+                                )
+
     def __repr__(self):
         return f'{self.Name} = App(icon_path={self.icon_path}, description={self.Description}, name={self.Name}, exe={self.Exe}'
 
     def __str__(self):
         return f'The Application Name is: {self.Name} \nThe Description is: {self.Description}'
+
     @staticmethod
     def Create_App():
         for index, object in enumerate(App.Object_List):
@@ -109,13 +115,12 @@ class App:
                 pass
 
 
-
-Settings = App(icon_path='Gui/Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
-Strunes = App(icon_path='Gui/Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
-Clock = App(icon_path='Gui/Images/Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
-Desktop = App(icon_path='Gui/Images/Desktop_Icon.png' , description = 'to get to the desktop', name='Desktop' )
-Tuesday = App(icon_path='Gui/Images/AI.png', description='For all your robot needs', name='Tuesday')
-Weather = App(icon_path='Gui/Images/Weather_Icon.png', description='An App for Weather... lol', name='Weather')
+Settings = App(icon_path='Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
+Strunes = App(icon_path='Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
+Clock = App(icon_path='Images/Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
+Desktop = App(icon_path='Images/Desktop_Icon.png' , description = 'to get to the desktop', name='Desktop' )
+Tuesday = App(icon_path='Images/AI.png', description='For all your robot needs', name='Tuesday')
+Weather = App(icon_path='Images/Weather_Icon.png', description='An App for Weather... lol', name='Weather')
 
 
 def execute_file():
