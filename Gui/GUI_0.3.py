@@ -11,6 +11,7 @@ from PIL import Image, ImageTk
 import os
 from pathlib import Path
 import weakref
+from time import sleep
 
 '''
 -------
@@ -21,7 +22,8 @@ Widgets
 window_h=480
 window_w=720
 root = tk.Tk()
-root.geometry("720x480")
+root.geometry(f"{window_w}x{window_h}")
+root.resizable()
 #root = tk.toplevel()
 
 ### Frame ###
@@ -30,19 +32,25 @@ displaybar_w = window_w*1
 Display_Bar_Color = '#00b584'
 Display_Bar = tk.Frame(root,
                        bg=Display_Bar_Color,
-                       height= displaybar_h
+                       height=displaybar_h
                        )
-Display_Bar.pack(fill='x',side='top')
+Display_Bar.pack(fill='x', side='top')
 ### Canvases ###
 Canvas1_Height = window_h*1-displaybar_h
-Canvas1_Width = window_w*1-displaybar_w
+Canvas1_Width = window_w*1
 Background1_Color = '#00E5B4'
 Active_Background_Color = '#bdffed'
-Button_Size = {'w': 125, 'h': 125}
+Button_Size = {'w': window_w*.174, 'h': window_h*.29}
 #Button_Size = 125, 125
 main_canvas = tk.Canvas(root,#Canvas Height = fill# #Canvas Width = fill#
                         bg=Background1_Color) #Canvas Background Color#
-main_canvas.pack(fill='both', expand = True)
+main_canvas.pack(fill='both', expand=True)
+
+# added name instead of opening as tk #
+root.title("Tuesday's GUI")
+
+# main_canvas.pack()
+# main_canvas.update()
 
 '''
 -----------------
@@ -54,18 +62,19 @@ Classes and Stuff
 
 class App:
     App_Positions = {
-                     'top_left': (.1,.2), 'top_middle': (.4, .2)   , 'top_right':(.7, .2),
-                     'bottom_lef':(.1, .6), 'bottom_middle':(.4,.6), 'bottom_right':(.7, .6)
+                     'top_left': (.1, .2), 'top_middle': (.4, .2), 'top_right': (.7, .2),
+                     'bottom_lef': (.1, .6), 'bottom_middle': (.4, .6), 'bottom_right': (.7, .6)
                     }
     App_List = {}
     Object_List = []
-    def __init__(self, icon_path=None, description=None, width=125, height=125, name=None, exe=None):
+
+    def __init__(self, icon_path=None, description=None, width=Button_Size['h'], height=Button_Size['w'], name=None, exe=None):
         self.Exe = exe
         self.Icon_Path = Path(icon_path)
         self.Description = description
         self.Width = width
         self.Height = height
-        self.size = (width, height)
+        self.Size = (width, height)
         self.Name = name
         self.icon_path = icon_path
         App.App_List.update({repr(self): self.Name})
@@ -73,7 +82,7 @@ class App:
 
         ### Initializing Icon For Each Object ###
         self.PIL_image = PIL.Image.open(self.Icon_Path)
-        self.PIL_image.thumbnail(self.size)
+        self.PIL_image.thumbnail(self.Size)
         self.Icon = PIL.ImageTk.PhotoImage(self.PIL_image)
 
         ### Initializing The Command ###
@@ -94,6 +103,9 @@ class App:
 
     def __str__(self):
         return f'The Application Name is: {self.Name} \nThe Description is: {self.Description}'
+
+    def updater(self):
+        self.size =
 
     @staticmethod
     def Create_App():
@@ -123,8 +135,22 @@ Tuesday = App(icon_path='Images/AI.png', description='For all your robot needs',
 Weather = App(icon_path='Images/Weather_Icon.png', description='An App for Weather... lol', name='Weather')
 
 
+# | added logger | #
+def logger(function):
+    import logging
+    logging.basicConfig(filename=f'{function.__name__}', level=logging.INFO)
+
+    def inner(*args, **kwargs):
+        logging.info(f"ran with {args} and {kwargs}")
+        return function(*args, **kwargs)
+
+    return inner
+
+
+# @logger
 def execute_file():
     App.Create_App()
     root.mainloop()
+
 
 execute_file()
