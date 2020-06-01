@@ -48,7 +48,7 @@ main_canvas.image = Water.water
 
 # added name instead of opening as tk, and added icon #
 root.title("Tuesday's GUI")
-root.iconbitmap("Images/AI.png")
+root.iconbitmap(Path("Images/AI.png"))
 
 # main_canvas.pack()
 # main_canvas.update()
@@ -126,7 +126,7 @@ class App:
                 pass
 
 
-Settings = App(icon_path='Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings', exe="run Settings")
+Settings = App(icon_path='Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings', exe="Settings")
 Strunes = App(icon_path='Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='run iTunes')
 Clock = App(icon_path='Images/Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
 Desktop = App(icon_path='Images/Desktop_Icon.png', description='to get to the desktop', name='Desktop')

@@ -1,7 +1,8 @@
 # | Penguins Rock | #
 
-from tkinter import *
+import tkinter as tk
 from time import sleep
+from pathlib import Path
 
 # added a basic idea of the start of settings that sends it's info into the "Water.py" files that we could #
 # possibly draw from to change functions in our GUI permanently based on Water's contents #
@@ -9,11 +10,11 @@ from time import sleep
 
 # def THANK_GOD(): tried making thins work but using os.system i don't think that it's possible so I took it out #
 
-root = Tk()
+root = tk.Tk()
 root.geometry('500x500')
-divided = Entry(root, width=50)
+divided = tk.Entry(root, width=50)
 root.title("DividedWater was here")
-root.iconbitmap("Settings.png")
+root.iconbitmap(Path("Settings"))
 divided.pack()
 wd = "Replace me with your file name"
 
@@ -31,10 +32,10 @@ def button2():
     done_button.forget()
     divided.insert(0, "successfully saved: ")
     sleep(1)
-    divided.delete(0, END)
+    divided.delete(0, tk.END)
 
 
-done_button = Button(root, text="press when done", command=button2)
-background = Button(root, command=change_background, text="Change Background of Home")
+done_button = tk.Button(root, text="press when done", command=button2)
+background = tk.Button(root, command=change_background, text="Change Background of Home")
 background.pack()
-mainloop()
+tk.mainloop()
