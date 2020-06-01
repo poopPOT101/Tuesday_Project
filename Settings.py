@@ -7,6 +7,8 @@ from time import sleep
 # possibly draw from to change functions in our GUI permanently based on Water's contents #
 
 
+# def THANK_GOD(): tried making thins work but using os.system i don't think that it's possible so I took it out #
+
 root = Tk()
 root.geometry('500x500')
 divided = Entry(root, width=50)
@@ -22,9 +24,10 @@ def change_background():
 
 
 def button2():
-    open('../../Water.py', 'w')
-    with open('../../Water.py', 'w') as water:
-        water.write(f"Water = r\"{divided.get()}\"\n")
+    open('Water.py', 'w')
+    with open('Water.py', 'w') as water:
+        water.write(f"import os.path\n\n\ndef water():\n    watt = \"{divided.get()}\"\n    if os.path.isfile(watt):\n "
+                    f"       return watt\n    else:\n        return False\n")
     done_button.forget()
     divided.insert(0, "successfully saved: ")
     sleep(1)

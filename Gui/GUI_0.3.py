@@ -11,7 +11,6 @@ from PIL import Image, ImageTk
 import os
 from pathlib import Path
 import Water
-
 '''
 -------
 Widgets
@@ -44,8 +43,8 @@ Button_Size = {'w': window_w*.174, 'h': window_h*.29}
 main_canvas = tk.Canvas(root,#Canvas Height = fill# #Canvas Width = fill#
                         bg=Background1_Color) #Canvas Background Color#
 main_canvas.pack(fill='both', expand=True)
-main_canvas.create_image(Canvas1_Width, Canvas1_Height, image=Water.Water)
-main_canvas.image = Water.Water
+main_canvas.create_image(Canvas1_Width, Canvas1_Height, image=Water.water if Water is True else None)
+main_canvas.image = Water.water
 
 # added name instead of opening as tk, and added icon #
 root.title("Tuesday's GUI")
@@ -97,7 +96,7 @@ class App:
                                 width=Button_Size['w'],
                                 activebackground=Active_Background_Color,
                                 bg=Background1_Color,
-                                command=lambda: os.system(f"start {self.Exe}") if self.Executable else None
+                                command=lambda: os.system(f"{self.Exe}") if self.Executable else None
                                 )
 
     def __repr__(self):
@@ -117,7 +116,7 @@ class App:
             elif index == 2:
                 object.Button.place(relx=App.App_Positions['top_right'][0], rely=App.App_Positions['top_right'][1])
             elif index == 3:
-                object.Button.place(relx=App.App_Positions['bottom_left'][0], rely=App.App_Positions['bottom_lef'][1])
+                object.Button.place(relx=App.App_Positions['bottom_left'][0], rely=App.App_Positions['bottom_left'][1])
             elif index == 4:
                 object.Button.place(relx=App.App_Positions['bottom_middle'][0], rely=App.App_Positions['bottom_middle'][1])
             elif index == 5:
@@ -127,8 +126,8 @@ class App:
                 pass
 
 
-Settings = App(icon_path='Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings')
-Strunes = App(icon_path='Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='iTunes')
+Settings = App(icon_path='Images/Settings.png', description='Play With Tuesdays Settings ;) ', name='Settings', exe="run Settings")
+Strunes = App(icon_path='Images/Music_Icon.png', description='To Jam Out When You are Likely a Lonely Loser', name='Strunes', exe='run iTunes')
 Clock = App(icon_path='Images/Clock.png', description='To Wake Yo Stupid Ass Up', name='Clock')
 Desktop = App(icon_path='Images/Desktop_Icon.png', description='to get to the desktop', name='Desktop')
 Tuesday = App(icon_path='Images/AI.png', description='For all your robot needs', name='Tuesday')
