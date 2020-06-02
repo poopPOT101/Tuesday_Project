@@ -10,7 +10,7 @@ from time import sleep
 
 root = tk.Tk()
 root.geometry('500x500')
-divided = Entry(root, width=50)
+divided = tk.Entry(root, width=50)
 root.title("DividedWater was here")
 root.iconbitmap("Settings.png")
 divided.pack()
@@ -30,10 +30,10 @@ def button2():
     done_button.forget()
     divided.insert(0, "successfully saved: ")
     sleep(1)
-    divided.delete(0, END)
+    divided.delete(0, tk.END)
 
 
-done_button = Button(root, text="press when done", command=button2)
-background = Button(root, command=change_background, text="Change Background of Home")
+done_button = tk.Button(root, text="press when done", command=button2)
+background = tk.Button(root, command=change_background, text="Change Background of Home")
 background.pack()
-mainloop()
+tk.mainloop()
