@@ -2,7 +2,7 @@ import os.path
 
 
 def water():
-    watt = "bet"
+    watt = "Replace me with your file name"
     if os.path.isfile(watt):
         return watt
     else:

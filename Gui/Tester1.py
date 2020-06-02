@@ -1,10 +1,10 @@
-def __iter__(self):
-    return self
+from glob import glob
+from pathlib import Path
 
-def __next__(self):
-    global index
-    if index >= len(App_List):
-        raise StopIteration
-        index = 0
-    index += 1
-    return App_List[index]  # Next Value#
+
+path = str(Path('Gui/Images/*'))
+Files = glob(path)
+for file in Files:
+    x, y = file.split('Gui\Images\\')
+    without, z = y.split('.')
+    print(y)
