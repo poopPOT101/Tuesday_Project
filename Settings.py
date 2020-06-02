@@ -1,6 +1,5 @@
 # | Penguins Rock | #
-
-from tkinter import *
+import tkinter as tk
 from time import sleep
 
 # added a basic idea of the start of settings that sends it's info into the "Water.py" files that we could #
@@ -9,7 +8,7 @@ from time import sleep
 
 # def THANK_GOD(): tried making thins work but using os.system i don't think that it's possible so I took it out #
 
-root = Tk()
+root = tk.Tk()
 root.geometry('500x500')
 divided = Entry(root, width=50)
 root.title("DividedWater was here")
