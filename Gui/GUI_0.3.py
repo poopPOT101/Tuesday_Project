@@ -11,7 +11,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import os
 from pathlib import Path
-import Water
+
 
 # | Logger | #
 def logger(function):
